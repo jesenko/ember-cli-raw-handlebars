@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-raw-handlebars",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Ember CLI addon that enables precompilation and usage of raw Handlebars templates in Ember",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "build": "ember build",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "https://github.com/jesenko/ember-cli-raw-handlebars",
   "engines": {
     "node": ">= 0.10.0"
   },
