@@ -35,7 +35,11 @@
     "ember-addon"
   ],
   "dependencies": {
-    "ember-cli-babel": "^4.0.0"
+    "ember-cli-babel": "^4.0.0",
+    "broccoli-filter": "^0.1.11",
+    "broccoli-merge-trees": "latest",
+    "broccoli-funnel": "latest",
+    "ember-cli-version-checker": "^1.0.2"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
