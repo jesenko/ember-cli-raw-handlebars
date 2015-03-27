@@ -14,10 +14,11 @@ module.exports = {
     checker.assertAbove(this, '0.1.2');
   },
 
-  included: function (app) {
+  included: function(app) {
+    app.import(this.templateRuntimePath());
   },
 
-  projectConfig: function () {
+  projectConfig: function() {
     return this.project.config(process.env.EMBER_ENV);
   },
 
@@ -48,5 +49,16 @@ module.exports = {
     }
 
     return path.join(this.project.root, templateCompilerPath);
+  },
+
+  templateRuntimePath: function() {
+    var config = this.projectConfig();
+    var templateRuntimePath = config['ember-cli-raw-handlebars'] && config['ember-cli-raw-handlebars'].templateRuntimePath;
+
+    if (!templateRuntimePath) {
+      templateRuntimePath = this.project.bowerDirectory + '/handlebars/handlebars.runtime.js';
+    }
+
+    return templateRuntimePath;
   }
 };
