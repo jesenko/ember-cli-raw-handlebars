@@ -1,30 +1,31 @@
 import Ember from 'ember';
 var initialize = function initialize(container, application) {
   let mainContainer = container;
-  let emberGetHelper = function(/* [args, ] options */) {
-    console.log(arguments);
-    var options = arguments[arguments.length - 1];
-    if (arguments.length === 1) {
-      return Ember.get(this, options.name);
+  let emberGetHelper = function(args, options) {
+    if (args) {
+      return Ember.get(this, args);
     }
   };
   let componentHelper = function(args,options) {
     let container = this.container || mainContainer;
-    let componentName = Ember.get(this, args);
+    let componentName = args;
     let component = container.lookup('component:' + componentName);
     if (!component) throw new Error(`Component ${componentName} not found!`);
-    let props = {};
-    Object.keys(options.hash).forEach((k) => {
-      props[k] = Ember.get(this, options.hash[k]);
-    });
-    console.log(props);
-    component.setProperties(props);
+    component.setProperties(options.hash);
     let buffer = [];
     component.render(buffer);
     return new Handlebars.SafeString(buffer[0]);
   };
-  Handlebars.registerHelper('helperMissing', emberGetHelper);
+  let nonblockIfHelper = function(args, options) {
+    if (args[0]){
+      return args[1];
+    } else {
+      return args[2];
+    }
+  };
+  Handlebars.registerHelper('get', emberGetHelper);
   Handlebars.registerHelper('component', componentHelper);
+  Handlebars.registerHelper('iff', nonblockIfHelper);
 };
 export { initialize };
 export default {
