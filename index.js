@@ -1,6 +1,7 @@
 /* jshint node: true */
 'use strict';
 
+var fs = require('fs');
 var path = require('path');
 var checker = require('ember-cli-version-checker');
 var rawHandlebarsCompiler = require('./raw-handlebars-compiler');
@@ -21,12 +22,18 @@ module.exports = {
     return this.project.config(process.env.EMBER_ENV);
   },
 
-  rawTemplatesPath: function() {
-    return this.app.options.rawTemplatesPath || path.join(this.app.trees.app._directoryPath, 'raw-templates');
+  rawTemplatesPaths: function() {
+    var _path = this.app.options.rawTemplatesPath || path.join(this.app.trees.app._directoryPath, 'raw-templates');
+
+    if (fs.existsSync(_path)) {
+      return [_path];
+    }
+
+    return [];
   },
 
   treeForApp: function(tree) {
-    var rawTemplates = mergeTrees([this.rawTemplatesPath()]);
+    var rawTemplates = mergeTrees(this.rawTemplatesPaths());
     rawTemplates = new Funnel(rawTemplates, { destDir: 'raw-templates' });
     rawTemplates = this.processRawTemplates(rawTemplates);
     return this.mergeTrees([tree, rawTemplates]);
