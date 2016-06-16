@@ -30,6 +30,7 @@ module.exports = {
     var rawTemplates = mergeTrees([this.rawTemplatesPath()]);
     rawTemplates = new Funnel(rawTemplates, { destDir: 'raw-templates' });
     rawTemplates = this.processRawTemplates(rawTemplates);
+    return tree;
     return this.mergeTrees([tree, rawTemplates]);
   },
 
