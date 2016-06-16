@@ -11,11 +11,10 @@ module.exports = {
   name: 'ember-cli-raw-handlebars',
 
   init: function() {
-    checker.assertAbove(this, '0.1.2');
+    checker.assertAbove(this, '2.4.3');
   },
 
   included: function(app) {
-    app.import(this.templateRuntimePath());
   },
 
   projectConfig: function() {
@@ -23,43 +22,17 @@ module.exports = {
   },
 
   rawTemplatesPath: function() {
-    return this.app.options.rawTemplatesPath || path.join(this.app.trees.app, 'raw-templates');
+    return this.app.options.rawTemplatesPath || path.join(this.app.trees.app._directoryPath, 'raw-templates');
   },
 
   treeForApp: function(tree) {
     var rawTemplates = mergeTrees([this.rawTemplatesPath()]);
     rawTemplates = new Funnel(rawTemplates, { destDir: 'raw-templates' });
     rawTemplates = this.processRawTemplates(rawTemplates);
-    return tree;
     return this.mergeTrees([tree, rawTemplates]);
   },
 
   processRawTemplates: function(tree) {
-    var options = {
-      templateCompilerPath: this.templateCompilerPath()
-    };
-    return rawHandlebarsCompiler(tree, options);
-  },
-
-  templateCompilerPath: function() {
-    var config = this.projectConfig();
-    var templateCompilerPath = config['ember-cli-raw-handlebars'] && config['ember-cli-raw-handlebars'].templateCompilerPath;
-
-    if (!templateCompilerPath) {
-      templateCompilerPath = this.project.bowerDirectory + '/handlebars/handlebars';
-    }
-
-    return path.join(this.project.root, templateCompilerPath);
-  },
-
-  templateRuntimePath: function() {
-    var config = this.projectConfig();
-    var templateRuntimePath = config['ember-cli-raw-handlebars'] && config['ember-cli-raw-handlebars'].templateRuntimePath;
-
-    if (!templateRuntimePath) {
-      templateRuntimePath = this.project.bowerDirectory + '/handlebars/handlebars.runtime.js';
-    }
-
-    return templateRuntimePath;
+    return rawHandlebarsCompiler(tree);
   }
 };

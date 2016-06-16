@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import Handlebars from 'npm:handlebars';
+
 var initialize = function initialize(container, application) {
   let mainContainer = container;
   let emberGetHelper = function(args, options) {

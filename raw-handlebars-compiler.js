@@ -7,15 +7,14 @@ var Ember = { assert: function() {}, FEATURES: { isEnabled: function() {} } };
 // var emberAssert = Ember.assert;
 var Handlebars;
 
-function TemplateCompiler (inputTree, options) {
+function TemplateCompiler (inputTree) {
   if (!(this instanceof TemplateCompiler)) {
-    return new TemplateCompiler(inputTree, options);
+    return new TemplateCompiler(inputTree);
   }
 
-  Filter.call(this, inputTree, options); // this._super()
+  Filter.call(this, inputTree); // this._super()
 
-  this.options = options || {};
-  Handlebars = require(options.templateCompilerPath);
+  Handlebars = require('handlebars');
   this.inputTree = inputTree;
 };
 
