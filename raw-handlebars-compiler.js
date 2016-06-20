@@ -30,7 +30,7 @@ TemplateCompiler.prototype.initializeFeatures = function initializeFeatures() {
 };
 
 TemplateCompiler.prototype.processString = function (string/*, relativePath */) {
-  return 'export default Handlebars.template(' + this.precompile(string, false) + ');';
+  return "import Handlebars from 'npm:handlebars'; export default Handlebars.template(" + this.precompile(string, false) + ");";
 };
 
 TemplateCompiler.prototype.precompile = function(value, asObject) {
