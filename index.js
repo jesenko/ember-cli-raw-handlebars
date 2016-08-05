@@ -28,10 +28,14 @@ module.exports = {
     return [];
   },
   treeForApp: function(tree) {
-    var rawTemplates = mergeTrees(this.rawTemplatesPaths());
+    let rawTemplates = mergeTrees(this.rawTemplatesPaths());
+
     rawTemplates = new Funnel(rawTemplates, { destDir: 'raw-templates' });
     rawTemplates = this.processRawTemplates(rawTemplates);
-    return mergeTrees([tree, rawTemplates]);
+
+    let mergedTrees = mergeTrees([tree, rawTemplates])
+   
+    return mergedTrees;
   },
   processRawTemplates: function(tree) {
     return new RawHandlebarsCompiler(tree);
