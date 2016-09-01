@@ -13,9 +13,6 @@ module.exports = {
   init: function() {
     checker.assertAbove(this, '2.4.3');
   },
-  baseDir: function() {
-    return __dirname;
-  },
   included: function(app) {
   },
   projectConfig: function() {
