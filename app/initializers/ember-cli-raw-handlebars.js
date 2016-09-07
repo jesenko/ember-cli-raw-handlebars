@@ -1,12 +1,15 @@
 import Ember from 'ember';
-var initialize = function initialize(container, application) {
-  let mainContainer = container;
+import Handlebars from 'npm:handlebars';
+
+var initialize = function initialize(appInstance) {
+  let mainContainer = appInstance.container;
   let emberGetHelper = function(args, options) {
     if (args) {
       return Ember.get(this, args);
     }
   };
-  let componentHelper = function(args,options) {
+
+  let componentHelper = (args,options) {
     let container = this.container || mainContainer;
     let componentName = args;
     let component = container.lookup('component:' + componentName);
@@ -16,6 +19,7 @@ var initialize = function initialize(container, application) {
     component.render(buffer);
     return new Handlebars.SafeString(buffer[0]);
   };
+
   let nonblockIfHelper = function(args, options) {
     if (args[0]){
       return args[1];
@@ -23,6 +27,7 @@ var initialize = function initialize(container, application) {
       return args[2];
     }
   };
+
   Handlebars.registerHelper('get', emberGetHelper);
   Handlebars.registerHelper('component', componentHelper);
   Handlebars.registerHelper('iff', nonblockIfHelper);
